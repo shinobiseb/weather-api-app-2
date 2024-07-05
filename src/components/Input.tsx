@@ -1,14 +1,23 @@
-import { coords } from "../assets/types"
+import { useState } from 'react'
 
-export default function Input(  ) {
+export default function Input() {
 
-  //Get functions from lon and lat inputs after submit
-  //use input values within setfunctions
+  const [latinput, setLatInput] = useState('')
+
+  const handleChange = (event : any) => {
+    setLatInput(event.target.value)
+  }
 
   return (
-    <form action="submit" className="p-2 flex flex-row justify-evenly w-full">
-      <input placeholder="Latitude" className='w-32 px-2 p-1 rounded-md border' type="number"/>
-      <input placeholder="Longitude" className='w-32 px-2 p-1 rounded-md border' type="number"/>
-    </form>
+    <div className='w-full flex flex-row justify-center'>
+      <input 
+        onChange={handleChange}
+        value={latinput}
+        className='px-2 border-black border w-20 rounded-md text-black' 
+        type="number"
+        placeholder='Latitude'
+      />
+      <button className="confirm bg-white px-2 p-1 rounded-md text-black">Confirm</button>
+    </div>
   )
 }
