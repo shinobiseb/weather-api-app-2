@@ -1,18 +1,32 @@
-import { useState } from 'react'
+import { useState, ChangeEvent } from 'react'
+
+const handleChange = (setState: React.Dispatch<React.SetStateAction<number>>) => (event: ChangeEvent<HTMLInputElement>) => {
+  
+  const value = event.target.value
+  const number = parseInt(value)
+
+  setState(number);
+};
 
 export default function Input() {
 
-  const [latinput, setLatInput] = useState('')
+  const [latInput, setLatInput] = useState(0)
+  const [lonInput, setLonInput] = useState(0)
 
-  const handleChange = (event : any) => {
-    setLatInput(event.target.value)
-  }
+  
 
   return (
     <div className='w-full flex flex-row justify-center'>
       <input 
-        onChange={handleChange}
-        value={latinput}
+        onChange={handleChange(setLatInput)}
+        value={latInput}
+        className='px-2 border-black border w-20 rounded-md text-black' 
+        type="number"
+        placeholder='Latitude'
+      />
+      <input 
+        onChange={handleChange(setLonInput)}
+        value={lonInput}
         className='px-2 border-black border w-20 rounded-md text-black' 
         type="number"
         placeholder='Latitude'
