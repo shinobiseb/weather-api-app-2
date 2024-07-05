@@ -19,11 +19,13 @@ export default function Input() {
     let lat = latRef.current
     let lon = lonRef.current
 
-    console.log(lat, lon)
+    if(lat !== null && lon !== null) {
+      console.log(lat.value, lon.value)
+    }
   }
 
-  const latRef = useRef(null)
-  const lonRef = useRef(null)
+  const latRef = useRef<HTMLInputElement | null>(null)
+  const lonRef = useRef<HTMLInputElement | null>(null)
   const [latInput, setLatInput] = useState(0)
   const [lonInput, setLonInput] = useState(0)
 
