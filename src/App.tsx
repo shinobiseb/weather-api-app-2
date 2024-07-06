@@ -3,21 +3,18 @@ import Input from './components/Input';
 import CurrentWeather from './components/CurrentWeather';
 import './index.css';
 import { useState } from 'react';
+import { endpoints } from './assets/endpoints';
 
 function App() {
-
   const APIKey = import.meta.env.VITE_API_KEY
+  const [coords, setCoords] = useState({ lat: 0, lon: 0})
 
-  const [lat, setLat] = useState(0)
-  const [lon, setLon] = useState(0)
+  const [apiEndpoint, setApiEndpoint] = useState(endpoints.getWeatherByCoords( coords.lat, coords.lat, APIKey))
 
-  const key = import.meta.env.VITE_API_KEY
-  const apiEndpoint : string = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}`
-  
   return (
     <div className='p-4 bg-black h-screen w-full text-white'>
       <Header/>
-      <Input setLat={setLat} setLon={setLon}/>
+      <Input setCoords={setCoords} apiEndpoint={apiEndpoint}/>
       <CurrentWeather/>
     </div>
   )
