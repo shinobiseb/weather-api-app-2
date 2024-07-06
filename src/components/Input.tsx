@@ -1,7 +1,7 @@
 import { ChangeEvent, useRef } from 'react';
 import { InputProps } from '../assets/types';
 
-const Input: React.FC<InputProps> = ({ setCoords, apiEndpoint }) => {
+const Input: React.FC<InputProps> = ({ setCoords, apiEndpoint, setData }) => {
 
   const handleChange = (setState: React.Dispatch<React.SetStateAction<{ lat: number, lon: number }>>, target: 'lat' | 'lon') => (event: ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value;
@@ -10,9 +10,7 @@ const Input: React.FC<InputProps> = ({ setCoords, apiEndpoint }) => {
       setState((prevState) => ({
           ...prevState,
           [target]: number
-      }));
-  
-      console.log(number);
+      }));  
   };
   
 
@@ -30,6 +28,27 @@ const Input: React.FC<InputProps> = ({ setCoords, apiEndpoint }) => {
     }
   };
 
+  const getWeather  = async ( apiEndpoint : string ) => {
+
+    fetch(apiEndpoint)
+      .then(response => {
+        if(!response.ok) {
+          throw new Error('Network response not OK')
+        }
+        return response.json()
+      })
+      .then(data => {
+        setData(data)
+      })
+      .catch( error => {
+        console.error('Error Alert!', error)
+      })
+  }
+
+  function finalSearchFunction() {
+    setCoordsOnClick()
+    getWeather(apiEndpoint)
+  }
 
   return (
     <div className='w-full flex flex-row justify-center'>
@@ -47,7 +66,7 @@ const Input: React.FC<InputProps> = ({ setCoords, apiEndpoint }) => {
         ref={lonRef}
         placeholder='Longitude'
       />
-      <button onClick={setCoordsOnClick} className="confirm bg-white px-2 p-1 rounded-md text-black">Confirm</button>
+      <button onClick={finalSearchFunction} className="confirm bg-white px-2 p-1 rounded-md text-black">Confirm</button>
     </div>
   );
 };
