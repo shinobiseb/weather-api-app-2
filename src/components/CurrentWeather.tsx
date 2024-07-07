@@ -13,6 +13,8 @@ export default function CurrentWeather( fetchedData : any ) {
       <main>
           <div className="main-weather flex-row flex text-white">
               <span>{data.main.temp}</span>
+              <span>{data.sys.country}</span>
+              <span>{data.name}</span>
           </div>
       </main>
     )
