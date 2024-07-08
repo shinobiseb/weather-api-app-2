@@ -8,6 +8,7 @@ import { endpoints } from './assets/endpoints';
 function App() {
   const APIKey = import.meta.env.VITE_API_KEY
   const [coords, setCoords] = useState<{ lat: number | null, lon: number | null}>({ lat: null, lon: null})
+  const [ cityName, setCityName ] = useState('')
   const [tempType, setTempType] = useState('imperial' as const)
   const [apiEndpoint, setApiEndpoint] = useState(
     endpoints.getWeatherByCoords( coords.lat, coords.lon, APIKey, tempType)
@@ -23,10 +24,12 @@ function App() {
     <div className='p-4 bg-black h-screen w-full text-white'>
       <Header/>
       <Input 
-      setCoords={setCoords} 
-      apiEndpoint={apiEndpoint} 
-      setData={setData}
-      coords={coords}
+        setCoords={setCoords} 
+        apiEndpoint={apiEndpoint}
+        setApiEndpoint={setApiEndpoint}
+        setData={setData}
+        coords={coords}
+        setCityName={setCityName}
       />
       <CurrentWeather
         data={data}

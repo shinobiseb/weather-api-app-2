@@ -1,9 +1,9 @@
 import { ChangeEvent, useRef, useEffect } from 'react';
 import { InputProps } from '../assets/types';
 
-const Input: React.FC<InputProps> = ({ setCoords, apiEndpoint, setData, coords }) => {
+const Input: React.FC<InputProps> = ({ setCoords, setCityName, apiEndpoint, setData, coords, setApiEndpoint }) => {
 
-  const handleChange = (setState: React.Dispatch<React.SetStateAction<{ lat: number | null, lon: number | null }>>, target: 'lat' | 'lon') => (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeCoords = (setState: React.Dispatch<React.SetStateAction<{ lat: number | null, lon: number | null }>>, target: 'lat' | 'lon') => (event: ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value;
       const number = parseFloat(value);
 
@@ -35,6 +35,12 @@ const Input: React.FC<InputProps> = ({ setCoords, apiEndpoint, setData, coords }
     }
   };
 
+  const handleChangeCityName = (setState: React.Dispatch<React.SetStateAction<string>>) => (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setState( value )
+
+  };
+
   const getWeather = async (apiEndpoint: string) => {
     try {
       const response = await fetch(apiEndpoint);
@@ -57,24 +63,27 @@ const Input: React.FC<InputProps> = ({ setCoords, apiEndpoint, setData, coords }
 
   return (
     <div className='w-full flex flex-row justify-center text-black'>
+
       <input 
-        onChange={handleChange(setCoords, 'lat')}
+        onChange={handleChangeCoords(setCoords, 'lat')}
         className='px-2 border-black border w-20 rounded-md' 
         type="number"
         ref={latRef}
         placeholder='Latitude'
       />
       <input 
-        onChange={handleChange(setCoords, 'lon')}
+        onChange={handleChangeCoords(setCoords, 'lon')}
         className='px-2 border-black border w-20 rounded-md' 
         type="number"
         ref={lonRef}
         placeholder='Longitude'
       />
-      {/* <select name="units" id="">
-        <option value="imperial">F</option>
-        <option value="metric">C</option>
-      </select> */}
+      <input 
+        onChange={handleChangeCityName(setCityName)}
+        placeholder='City Name'
+        className='px-2 border-black border w-20 rounded-md' 
+        type="text"
+      />
       
       <button onClick={finalSearchFunction} className="confirm bg-white px-2 p-1 rounded-md">Confirm</button>
     </div>
