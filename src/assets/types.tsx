@@ -1,10 +1,10 @@
 export type InputProps = {
-    setCoords: React.Dispatch<React.SetStateAction<{lat: number | null, lon: number | null}>>,
     apiEndpoint: string;
     setData: React.Dispatch<React.SetStateAction<Object | null>>;
-    coords: {lat: number | null, lon: number | null};
     setCityName: React.Dispatch<React.SetStateAction<string>>;
-    setApiEndpoint: React.Dispatch<React.SetStateAction<string>>
+    cityName : string
+    setApiEndpoint: React.Dispatch<React.SetStateAction<string>>;
+    apiKey : string
 }
 
 export interface EndpointReq {
@@ -12,7 +12,11 @@ export interface EndpointReq {
 }
 
 export type CurrentWeatherProps = {
-    data: any
+    data: any;
+    coords : { lat: number | null, lon: number | null };
+    setCoords: React.Dispatch<React.SetStateAction<{ lat: number | null; lon: number | null }>>;
+    apiKey : string;
+    units : 'standard' | 'metric' | 'imperial';
 }
 
 export type SetFunction = (value: string) => void;

@@ -11,28 +11,38 @@ function App() {
   const [ cityName, setCityName ] = useState('')
   const [tempType, setTempType] = useState('imperial' as const)
   const [apiEndpoint, setApiEndpoint] = useState(
-    endpoints.getWeatherByCoords( coords.lat, coords.lon, APIKey, tempType)
+    endpoints.getCoordsByCityName(
+      cityName, APIKey
+    )
   )
   const [data, setData] = useState<Object | null>({})
 
   useEffect(() => {
-    const endpoint = endpoints.getWeatherByCoords(coords.lat, coords.lon, APIKey, tempType);
+    const endpoint = endpoints.getCoordsByCityName(
+      cityName, APIKey
+    )
     setApiEndpoint(endpoint);
-  }, [coords, tempType]);
+  }, [cityName, tempType]);
+
+  console.log(apiEndpoint)
 
   return (
     <div className='p-4 bg-black h-screen w-full text-white'>
       <Header/>
       <Input 
-        setCoords={setCoords} 
         apiEndpoint={apiEndpoint}
         setApiEndpoint={setApiEndpoint}
         setData={setData}
-        coords={coords}
         setCityName={setCityName}
+        cityName={cityName}
+        apiKey={APIKey}
       />
       <CurrentWeather
+        setCoords={setCoords}
+        coords={coords}
         data={data}
+        apiKey={APIKey}
+        units={tempType}
       />
     </div>
   )
