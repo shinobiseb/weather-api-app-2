@@ -1,5 +1,5 @@
 import { ChangeEvent, useRef, useEffect, useState } from 'react';
-import { InputProps } from '../assets/types';
+import { InputProps, WeatherData } from '../assets/types';
 import { endpoints } from '../assets/endpoints';
 
 const Input: React.FC<InputProps> = ({setCityName, cityName , apiEndpoint, apiKey, setData, setApiEndpoint }) => {
@@ -25,7 +25,7 @@ const Input: React.FC<InputProps> = ({setCityName, cityName , apiEndpoint, apiKe
       if (!response.ok) {
         throw new Error(`Network response not OK: ${response.statusText}`);
       }
-      const data = await response.json();
+      const data : WeatherData = await response.json();
       setData(data);
     } catch (error) {
       console.error('Error fetching weather data:', error);
