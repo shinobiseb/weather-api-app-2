@@ -31,8 +31,8 @@ const Input: React.FC<InputProps> = ({ setSearchValue, searchValue, apiEndpoint,
       setApiEndpoint(endpoints.getCoordsByCityName(searchValue, apiKey));
       console.log('City Name Endpoint Updated: ', searchValue);
     } else {
-      setApiEndpoint(endpoints.getCoordsByZip(parseInt(searchValue), apiKey));
-      console.log('ZipCode Endpoint Updated: ', searchValue);
+      setApiEndpoint(endpoints.getCoordsByZip(searchValue, apiKey));
+      console.log('ZipCode Endpoint Updated: ', parseInt(searchValue));
     }
   }, [searchValue]);
 
@@ -42,7 +42,7 @@ const Input: React.FC<InputProps> = ({ setSearchValue, searchValue, apiEndpoint,
       getWeather(apiEndpoint);
       console.log('City Name Entry');
     } else {
-      setApiEndpoint(endpoints.getCoordsByZip(parseInt(searchValue), apiKey));
+      setApiEndpoint(endpoints.getCoordsByZip(searchValue, apiKey));
       console.log('Zip Entry');
       getWeather(apiEndpoint);
     }
@@ -58,7 +58,6 @@ const Input: React.FC<InputProps> = ({ setSearchValue, searchValue, apiEndpoint,
         type="text"
         ref={searchValueRef}
       />
-      
       <button onClick={finalSearchFunction} className="confirm bg-white px-2 p-1 rounded-md">Confirm</button>
     </div>
   );
