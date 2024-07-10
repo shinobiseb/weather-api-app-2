@@ -1,15 +1,17 @@
-import { CurrentWeatherProps, WeatherData, Main } from "../assets/types";
+import { CurrentWeatherProps, WeatherData } from "../assets/types";
 import { endpoints } from "../assets/endpoints";
 import { useState, useEffect } from "react";
 
 export default function CurrentWeather( { data, coords, setCoords, apiKey, units }: CurrentWeatherProps ) {
   const [weatherData, setWeatherData] = useState<any>({});
 
-  console.log(weatherData)
+  
 
   useEffect(() => {
     if (data[0]) {
       setCoords({ lat: data[0].lat, lon: data[0].lon });
+    } else if (data.lat && data.lon) {
+      setCoords({ lat: data.lat, lon: data.lon })
     }
   }, [data, setCoords]);
 

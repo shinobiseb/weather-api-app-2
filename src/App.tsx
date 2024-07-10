@@ -2,29 +2,22 @@ import Header from './components/Header';
 import Input from './components/Input';
 import CurrentWeather from './components/CurrentWeather';
 import './index.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { endpoints } from './assets/endpoints';
 
 function App() {
-  const APIKey = import.meta.env.VITE_API_KEY
-  const [coords, setCoords] = useState<{ lat: number | null, lon: number | null}>({ lat: null, lon: null})
-  const [ cityName, setCityName ] = useState('')
-  const [tempType, setTempType] = useState('imperial' as const)
+  const APIKey = import.meta.env.VITE_API_KEY;
+  const [coords, setCoords] = useState<{ lat: number | null, lon: number | null}>({ lat: null, lon: null });
+  const [searchValue, setSearchValue] = useState('');
+  const [tempType, setTempType] = useState('imperial' as const);
   const [apiEndpoint, setApiEndpoint] = useState(
     endpoints.getCoordsByCityName(
-      cityName, APIKey
+      searchValue, APIKey
     )
-  )
-  const [data, setData] = useState<Object | null>({})
+  );
 
-  useEffect(() => {
-    const endpoint = endpoints.getCoordsByCityName(
-      cityName, APIKey
-    )
-    setApiEndpoint(endpoint);
-  }, [cityName, tempType]);
-
-  console.log(apiEndpoint)
+  const [data, setData] = useState<Object | null>({});
+  console.log('Data from App.tsx: ', data);
 
   return (
     <div className='p-4 bg-black h-screen w-full text-white'>
@@ -33,8 +26,8 @@ function App() {
         apiEndpoint={apiEndpoint}
         setApiEndpoint={setApiEndpoint}
         setData={setData}
-        setCityName={setCityName}
-        cityName={cityName}
+        setSearchValue={setSearchValue}
+        searchValue={searchValue}
         apiKey={APIKey}
       />
       <CurrentWeather
@@ -45,7 +38,7 @@ function App() {
         units={tempType}
       />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
