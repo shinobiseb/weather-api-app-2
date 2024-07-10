@@ -1,10 +1,11 @@
 import { CurrentWeatherProps, WeatherData, Main } from "../assets/types";
 import { endpoints } from "../assets/endpoints";
 import { useState, useEffect } from "react";
-import { stringify } from "querystring";
 
 export default function CurrentWeather( { data, coords, setCoords, apiKey, units }: CurrentWeatherProps ) {
   const [weatherData, setWeatherData] = useState<any>({});
+
+  console.log(weatherData)
 
   useEffect(() => {
     if (data[0]) {

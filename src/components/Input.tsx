@@ -33,7 +33,12 @@ const Input: React.FC<InputProps> = ({setCityName, cityName , apiEndpoint, apiKe
   };
 
   function finalSearchFunction() {
-    getWeather(apiEndpoint)
+    if (Number.isNaN(parseInt(cityName))) {
+      getWeather(apiEndpoint)
+    } else {
+      setApiEndpoint(endpoints.getWeatherByZip(parseInt(cityName), apiKey))
+      getWeather(apiEndpoint)
+    }
   }
 
   return (
