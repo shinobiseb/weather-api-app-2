@@ -2,7 +2,7 @@ import Header from './components/Header';
 import Input from './components/Input';
 import CurrentWeather from './components/CurrentWeather';
 import './index.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { endpoints } from './assets/endpoints';
 
 function App() {
@@ -15,6 +15,10 @@ function App() {
       searchValue, APIKey
     )
   );
+
+  useEffect(()=> {
+    setTempType('imperial')
+  }, [])
 
   const [data, setData] = useState<Object | null>({});
   console.log('Data from App.tsx: ', data);
