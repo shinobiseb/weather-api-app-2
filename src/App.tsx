@@ -19,7 +19,12 @@ function App() {
 
   useEffect(()=> {
     setTempType('imperial')
-    console.log('Data from App.tsx: ', data);
+    if(Array.isArray(data) && data.length === 0) {
+      setData(null)
+      console.warn('No data found for this location')
+      return
+    }
+    console.log(data)
   }, [data])
 
   return (

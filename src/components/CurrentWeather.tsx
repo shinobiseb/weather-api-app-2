@@ -7,10 +7,12 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
   const [weatherData, setWeatherData] = useState<any>({});  
 
   useEffect(() => {
-    if (data[0]) {
-      setCoords({ lat: data[0].lat, lon: data[0].lon });
-    } else if (data.lat && data.lon) {
-      setCoords({ lat: data.lat, lon: data.lon })
+    if(data !== null) {
+      if (data[0]) {
+        setCoords({ lat: data[0].lat, lon: data[0].lon });
+      } else if (data.lat && data.lon) {
+        setCoords({ lat: data.lat, lon: data.lon })
+      }
     }
   }, [data, setCoords]);
 
@@ -113,20 +115,21 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
   const hasWeatherCondition = weatherCondition.length > 0;
   const conditionMessage = hasWeatherCondition ? `Beware of ${weatherCondition[0]}` : null;
 
-  if(weatherData.length === 0) {
-    return(
-      <>
-        <h3 className="text-3xl"> No Data Found for Input</h3>
-        <p className="italic">Please check spelling or try another location</p>
-      </>
-    ) 
+  if (!data) {
+    return (
+      <main className="flex flex-col justify-center w-full items-center">
+        <h1 className="text-3xl bold">Dang!</h1>
+        <h2 className="text-xl">No found data!</h2>
+        <p>Please verify location submitted or search for a different location.</p>
+      </main>
+    );
   }
 
   if (typeof weatherData === 'object' && weatherData !== null) {
     if (weatherData.main) {
       return (
         <main id="CurrentWeather">
-          <div className="main-weather flex-col flex text-white mt-4">
+          <div className="main-weather flex-col flex text-white">
             <h2 className="text-2xl font-bold">{weatherData.name}</h2>
             <section className="flex flex-row">
               <h3 className="text-5xl">{Math.round(weatherData.main.temp)}°</h3>
@@ -137,7 +140,7 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
             </p>
           </div>
           <section id="clothing-section">
-            <h3 className="text-xl font-semibold mt-4">Clothing Recommendation:</h3>
+            <h3 className="text-xl font-semibold">Clothing Recommendation:</h3>
             <span className="text-lg"> {clothingSuggestion} </span>
             {conditionMessage && <span>{conditionMessage}</span>}
           </section>
@@ -148,5 +151,12 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
     }
   }
 
-  return null;
+  return (
+    <main className="flex flex-col justify-center w-full items-center">
+      <section className="flex flex-col w-4/5">
+        <h1 className="text-3xl bold text-center">Hello!</h1>
+        <p>To find the current weather in a specific area, enter the zip code or city name in the input box above.</p>
+      </section>
+    </main>
+  );
 }

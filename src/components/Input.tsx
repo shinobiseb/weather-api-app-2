@@ -50,10 +50,10 @@ const Input: React.FC<InputProps> = ({ setSearchValue, searchValue, apiEndpoint,
 
   // --------------- Return---------------
   return (
-    <div className='w-full flex flex-row justify-center text-black'>
+    <div className='w-full flex flex-row justify-center text-black mb-4'>
       <input
         onChange={handleChange(setSearchValue)}
-        placeholder='City Name'
+        placeholder='City Name or Zip Code'
         className='px-2 border-black border w-full rounded-md'
         type="text"
         ref={searchValueRef}
