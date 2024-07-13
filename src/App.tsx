@@ -15,13 +15,12 @@ function App() {
       searchValue, APIKey
     )
   );
+  const [data, setData] = useState<Object | null>({});
 
   useEffect(()=> {
     setTempType('imperial')
-  }, [])
-
-  const [data, setData] = useState<Object | null>({});
-  console.log('Data from App.tsx: ', data);
+    console.log('Data from App.tsx: ', data);
+  }, [data])
 
   return (
     <div className='p-4 bg-black h-screen w-full text-white'>

@@ -74,11 +74,11 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
       setClothingSuggestion(clothing.veryCold);
       break;
 
-    case (temp >= 40 && temp < 60):
+    case (temp >= 40 && temp < 50):
       setClothingSuggestion(clothing.coldWeather);
       break;
 
-    case (temp >= 60 && temp < 80):
+    case (temp >= 50 && temp < 80):
       setClothingSuggestion(clothing.mildWeather);
       break;
 
@@ -91,13 +91,22 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
     }
   }
 
+  function summarizeWindSpeed(windSpeed : number) {
+    if (windSpeed < 5) {
+        return "slightly windy";
+    } else if (windSpeed >= 5 && windSpeed < 15) {
+        return "breezy";
+    } else {
+        return "very windy";
+    }
+  }
+
   useEffect(()=> {
     if (weatherData) {
       isWeatherCondition();
       if (weatherData.main) {
         setTemp(Math.round(weatherData.main.temp));
         getClothingRecommendation(temp)
-        console.log(clothingSuggestion)
       }
     }
   }, [weatherData, temp])
@@ -116,11 +125,16 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
               <h3 className="text-5xl">{Math.round(weatherData.main.temp)}°</h3>
             </section>
             <span className="text-lg">Feels like {Math.round(weatherData.main.feels_like)}°</span>
+            <p className="text-md">
+              The wind speed is <span className="italic">({weatherData.wind.speed})</span>, or {summarizeWindSpeed(weatherData.wind.speed)}.
+            </p>
           </div>
-          <section>
+          <section id="clothing-section">
             <h3 className="text-xl font-semibold mt-4">Clothing Recommendation:</h3>
             <span className="text-lg"> {clothingSuggestion} </span>
             {conditionMessage && <span>{conditionMessage}</span>}
+          </section>
+          <section>
           </section>
         </main>
       );

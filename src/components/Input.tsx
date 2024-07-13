@@ -51,10 +51,10 @@ const Input: React.FC<InputProps> = ({ setSearchValue, searchValue, apiEndpoint,
   // --------------- Return---------------
   return (
     <div className='w-full flex flex-row justify-center text-black'>
-      <input 
+      <input
         onChange={handleChange(setSearchValue)}
         placeholder='City Name'
-        className='px-2 border-black border w-20 rounded-md'
+        className='px-2 border-black border w-60 rounded-md'
         type="text"
         ref={searchValueRef}
       />
