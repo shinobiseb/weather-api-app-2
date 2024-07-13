@@ -68,7 +68,6 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
   }
 
   function getClothingRecommendation(temp: number) {
-
     switch (true) {
       case (temp < 40):
       setClothingSuggestion(clothing.veryCold);
@@ -114,11 +113,19 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
   const hasWeatherCondition = weatherCondition.length > 0;
   const conditionMessage = hasWeatherCondition ? `Beware of ${weatherCondition[0]}` : null;
 
+  if(weatherData.length === 0) {
+    return(
+      <>
+        <h3 className="text-3xl"> No Data Found for Input</h3>
+        <p className="italic">Please check spelling or try another location</p>
+      </>
+    ) 
+  }
 
   if (typeof weatherData === 'object' && weatherData !== null) {
     if (weatherData.main) {
       return (
-        <main>
+        <main id="CurrentWeather">
           <div className="main-weather flex-col flex text-white mt-4">
             <h2 className="text-2xl font-bold">{weatherData.name}</h2>
             <section className="flex flex-row">
@@ -126,7 +133,7 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
             </section>
             <span className="text-lg">Feels like {Math.round(weatherData.main.feels_like)}°</span>
             <p className="text-md">
-              The wind speed is <span className="italic">({weatherData.wind.speed})</span>, or {summarizeWindSpeed(weatherData.wind.speed)}.
+              The wind speed is <span className="italic">({weatherData.wind.speed}mph)</span>, or {summarizeWindSpeed(weatherData.wind.speed)}.
             </p>
           </div>
           <section id="clothing-section">

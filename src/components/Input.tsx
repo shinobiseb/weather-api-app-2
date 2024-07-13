@@ -54,11 +54,16 @@ const Input: React.FC<InputProps> = ({ setSearchValue, searchValue, apiEndpoint,
       <input
         onChange={handleChange(setSearchValue)}
         placeholder='City Name'
-        className='px-2 border-black border w-60 rounded-md'
+        className='px-2 border-black border w-full rounded-md'
         type="text"
         ref={searchValueRef}
       />
-      <button onClick={finalSearchFunction} className="confirm bg-white px-2 p-1 rounded-md">Confirm</button>
+      <button 
+      onClick={finalSearchFunction} 
+      className="confirm bg-white px-2 p-1 ml-1 rounded-md"
+      >
+        Confirm
+      </button>
     </div>
   );
 };

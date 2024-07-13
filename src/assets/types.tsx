@@ -5,7 +5,7 @@ export type InputProps = {
     searchValue: string;
     setApiEndpoint: React.Dispatch<React.SetStateAction<string>>;
     apiKey: string;
-  }
+}
 
 export interface EndpointReq {
     (lat: number, lon: number, APIKey: string, units: 'standard' | 'metric' | 'imperial'): string;

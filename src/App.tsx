@@ -23,7 +23,7 @@ function App() {
   }, [data])
 
   return (
-    <div className='p-4 bg-black h-screen w-full text-white'>
+    <div className='p-2 bg-black h-screen w-full text-white'>
       <Header/>
       <Input 
         apiEndpoint={apiEndpoint}

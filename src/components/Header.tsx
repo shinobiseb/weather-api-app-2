@@ -1,11 +1,12 @@
+import { FaBars } from "react-icons/fa6";
 
 export default function Header() {
   return (
-    <header className="flex flex-row justify-between p-2 items-center mb-2">
+    <header className="flex flex-row justify-between items-center mb-2 ">
         <h1 className='header-title text-xl'>
-            CWB
+            WeatherApp
         </h1>
-        <p>Cloudy With a Chance of Bars</p>
+        <FaBars/>
     </header>
   )
 }
