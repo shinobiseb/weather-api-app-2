@@ -2,9 +2,13 @@ import { CurrentWeatherProps, WeatherData } from "../assets/types";
 import { endpoints } from "../assets/endpoints";
 import { useState, useEffect } from "react";
 import { clothing } from "../assets/clothing";
+import { WeatherIcon } from "./WeatherIcon";
+import ClothingIcon from "../components/ClothingIcon"; 
 
 export default function CurrentWeather( { data, coords, setCoords, apiKey, units }: CurrentWeatherProps ) {
-  const [weatherData, setWeatherData] = useState<any>({});  
+
+  const [weatherData, setWeatherData] = useState<any>({}); 
+  const [weatherDescription, setWeatherDescription] = useState<string>("clear sky");
 
   useEffect(() => {
     if(data !== null) {
@@ -16,7 +20,6 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
     }
   }, [data, setCoords]);
 
-
   useEffect(() => {
     const coordsToWeather = async () => {
       if (coords.lat && coords.lon) {
@@ -27,7 +30,10 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
           }
           const data : WeatherData = await response.json();
           setWeatherData(data);
-          console.table(data)
+          console.table(data);
+          if (data.weather && data.weather.length > 0) {
+            setWeatherDescription(data.weather[0].description);
+          }
         } catch (error) {
           console.error(error);
         }
@@ -37,10 +43,10 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
     coordsToWeather();
   }, [coords, apiKey, units]);
 
-  const [temp, setTemp] = useState(0)
-  const [weatherCondition, setWeatherCondition] = useState<Array<string | null>>([])
-  const [clothingSuggestion, setClothingSuggestion] = useState('')
-  
+  const [temp, setTemp] = useState(0);
+  const [weatherCondition, setWeatherCondition] = useState<Array<string | null>>([]);
+  const [clothingSuggestion, setClothingSuggestion] = useState('');
+
   function isWeatherCondition() {
     if (!weatherData) {
       return;
@@ -72,45 +78,41 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
   function getClothingRecommendation(temp: number) {
     switch (true) {
       case (temp < 40):
-      setClothingSuggestion(clothing.veryCold);
-      break;
-
-    case (temp >= 40 && temp < 50):
-      setClothingSuggestion(clothing.coldWeather);
-      break;
-
-    case (temp >= 50 && temp < 80):
-      setClothingSuggestion(clothing.mildWeather);
-      break;
-
-    case (temp >= 80):
-      setClothingSuggestion(clothing.hotWeather);
-      break;
-
+        setClothingSuggestion(clothing.veryCold);
+        break;
+      case (temp >= 40 && temp < 50):
+        setClothingSuggestion(clothing.coldWeather);
+        break;
+      case (temp >= 50 && temp < 80):
+        setClothingSuggestion(clothing.mildWeather);
+        break;
+      case (temp >= 80):
+        setClothingSuggestion(clothing.hotWeather);
+        break;
       default:
         return 'Clothing recommendation not available';
     }
   }
 
-  function summarizeWindSpeed(windSpeed : number) {
+  function summarizeWindSpeed(windSpeed: number) {
     if (windSpeed < 5) {
-        return "slightly windy";
+      return "slightly windy";
     } else if (windSpeed >= 5 && windSpeed < 15) {
-        return "breezy";
+      return "breezy";
     } else {
-        return "very windy";
+      return "very windy";
     }
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     if (weatherData) {
       isWeatherCondition();
       if (weatherData.main) {
         setTemp(Math.round(weatherData.main.temp));
-        getClothingRecommendation(temp)
+        getClothingRecommendation(temp);
       }
     }
-  }, [weatherData, temp])
+  }, [weatherData, temp]);
 
   const hasWeatherCondition = weatherCondition.length > 0;
   const conditionMessage = hasWeatherCondition ? `Beware of ${weatherCondition[0]}` : null;
@@ -119,7 +121,7 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
     return (
       <main className="flex flex-col justify-center w-full items-center">
         <h1 className="text-3xl bold">Dang!</h1>
-        <h2 className="text-xl">No found data!</h2>
+        <h2 className="text-xl">No data found!</h2>
         <p>Please verify location submitted or search for a different location.</p>
       </main>
     );
@@ -130,21 +132,22 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
       return (
         <main id="CurrentWeather">
           <div className="main-weather flex-col flex text-white">
-            <h2 className="text-2xl font-bold">{weatherData.name}</h2>
-            <section className="flex flex-row">
-              <h3 className="text-5xl">{Math.round(weatherData.main.temp)}°</h3>
-            </section>
-            <span className="text-lg">Feels like {Math.round(weatherData.main.feels_like)}°</span>
-            <p className="text-md">
-              The wind speed is <span className="italic">({weatherData.wind.speed}mph)</span>, or {summarizeWindSpeed(weatherData.wind.speed)}.
+            <main className="flex flex-row w-full justify-between">
+              <section className="flex flex-col justify-center items-center w-1/2">
+                <h2 className="text-7xl">{Math.round(weatherData.main.temp)}°</h2>
+                <h3 className="text-md">{weatherData.name}</h3>
+              </section>
+              <WeatherIcon description={weatherDescription} />
+            </main>
+            
+            <p className="text-md mb-5">
+              Wind Speed: <span className="italic">({weatherData.wind.speed}mph)</span>, or {summarizeWindSpeed(weatherData.wind.speed)}.
             </p>
           </div>
           <section id="clothing-section">
-            <h3 className="text-xl font-semibold">Clothing Recommendation:</h3>
+            <h3 className="text- font-semibold">Clothing Recommendation:</h3>
             <span className="text-lg"> {clothingSuggestion} </span>
             {conditionMessage && <span>{conditionMessage}</span>}
-          </section>
-          <section>
           </section>
         </main>
       );

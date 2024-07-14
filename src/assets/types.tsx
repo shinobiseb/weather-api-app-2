@@ -61,6 +61,11 @@ export interface Sys {
     sunrise: number;
 }
 
+
+export interface WeatherIconProps {
+    description: string;
+  }
+
 export interface WeatherData {
     coord: Coord;
     weather: Weather[];
