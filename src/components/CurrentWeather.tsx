@@ -3,12 +3,12 @@ import { endpoints } from "../assets/endpoints";
 import { useState, useEffect } from "react";
 import { clothing } from "../assets/clothing";
 import { WeatherIcon } from "./WeatherIcon";
-import ClothingIcon from "../components/ClothingIcon"; 
 
 export default function CurrentWeather( { data, coords, setCoords, apiKey, units }: CurrentWeatherProps ) {
 
   const [weatherData, setWeatherData] = useState<any>({}); 
   const [weatherDescription, setWeatherDescription] = useState<string>("clear sky");
+
 
   useEffect(() => {
     if(data !== null) {
@@ -26,7 +26,7 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
         try {
           const response = await fetch(endpoints.getWeatherByCoords(coords.lat, coords.lon, apiKey, units));
           if (!response.ok) {
-            throw new Error(`Network response not OK: ${response.statusText}`);
+            throw new Error(`Network response for weather not OK: ${response.statusText}`);
           }
           const data : WeatherData = await response.json();
           setWeatherData(data);
@@ -39,7 +39,6 @@ export default function CurrentWeather( { data, coords, setCoords, apiKey, units
         }
       }
     };
-
     coordsToWeather();
   }, [coords, apiKey, units]);
 
