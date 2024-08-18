@@ -28,23 +28,25 @@ function App() {
   }, [data])
 
   return (
-    <div className='p-2 bg-black h-screen w-full text-white'>
-      <Header/>
-      <Input 
-        apiEndpoint={apiEndpoint}
-        setApiEndpoint={setApiEndpoint}
-        setData={setData}
-        setSearchValue={setSearchValue}
-        searchValue={searchValue}
-        apiKey={APIKey}
-      />
-      <CurrentWeather
-        setCoords={setCoords}
-        coords={coords}
-        data={data}
-        apiKey={APIKey}
-        units={tempType}
-      />
+    <div className='bg-black h-screen w-full text-white flex flex-col items-center'>
+      <main className='max-w-3xl flex flex-col items-center w-full h-full p-2'>
+        <Header/>
+        <Input 
+          apiEndpoint={apiEndpoint}
+          setApiEndpoint={setApiEndpoint}
+          setData={setData}
+          setSearchValue={setSearchValue}
+          searchValue={searchValue}
+          apiKey={APIKey}
+        />
+        <CurrentWeather
+          setCoords={setCoords}
+          coords={coords}
+          data={data}
+          apiKey={APIKey}
+          units={tempType}
+        />
+      </main>
     </div>
   );
 }

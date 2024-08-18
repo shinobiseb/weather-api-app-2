@@ -50,17 +50,17 @@ const Input: React.FC<InputProps> = ({ setSearchValue, searchValue, apiEndpoint,
 
   // --------------- Return---------------
   return (
-    <div className='w-full flex flex-row justify-center text-black mb-4'>
+    <div className='w-full flex flex-row justify-center text-black mb-4 self-center'>
       <input
         onChange={handleChange(setSearchValue)}
         placeholder='City Name or Zip Code'
-        className='px-2 border-black border w-full rounded-md'
+        className='p-2 border-black border w-full rounded-md'
         type="text"
         ref={searchValueRef}
       />
       <button 
       onClick={finalSearchFunction} 
-      className="confirm bg-white px-2 p-1 ml-1 rounded-md"
+      className="confirm px-2 p-1 ml-1 rounded-md bg-orange text-white"
       >
         Confirm
       </button>
